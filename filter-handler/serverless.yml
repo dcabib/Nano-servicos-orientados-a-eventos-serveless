@@ -1,0 +1,16 @@
+service: filter-handler # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-east-1
+  profile: serverless-admin
+
+functions:
+  filter:
+    handler: handler.filter
+    role: arn:aws:iam::226373140466:role/lambda-sqs-s3
+
+    events:
+     - sns: arn:aws:sns:us-east-1:226373140466:s3-nanoservices-imagens-put-topic
+

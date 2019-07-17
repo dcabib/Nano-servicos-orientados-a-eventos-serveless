@@ -1,0 +1,22 @@
+service: image-consumer # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-east-1
+  profile: serverless-admin
+
+functions:
+  consumer:
+    handler: handler.consumer
+    role: arn:aws:iam::226373140466:role/lambda-image-consumer
+    vpc:
+      subnetIds:
+        - subnet-0212af2a74f5439f7
+        - subnet-093e55dce2bff20ac
+      securityGroupIds:
+        - sg-08f1d9628c750e458
+    reservedConcurrency: 1
+
+    events:
+     - sqs: arn:aws:sqs:us-east-1:226373140466:post-processing-image-queue

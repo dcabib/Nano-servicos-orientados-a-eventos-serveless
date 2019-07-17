@@ -1,0 +1,16 @@
+
+service: image-tagging-filter # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-east-1
+  profile: serverless-admin
+
+functions:
+  tag:
+    handler: handler.tag
+    role: arn:aws:iam::226373140466:role/lambda-sqs-rekognition
+
+    events:
+     - sns: arn:aws:sns:us-east-1:226373140466:s3-nanoservices-imagens-put-topic
